@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { asyncHandler } = require('../middleware/errorMiddleware');
-const { sanitizeInput } = require('../middleware/validationMiddleware');
+// Validation middleware removed
 
 // Import models with error handling
 let ResitForm, Course, Batch, Module, User, MedicalSubmission, Department;
@@ -302,7 +302,7 @@ router.get('/approval-history', auth(), checkCourseDirector, async (req, res) =>
 });
 
 // Create new resit form (Student only)
-router.post('/', auth('student'), sanitizeInput, asyncHandler(async (req, res) => {
+router.post('/', auth('student'), asyncHandler(async (req, res) => {
   // Check if models are loaded
   if (!ResitForm || !Course || !Batch || !Module || !User || !MedicalSubmission || !Department) {
     console.error('Models not loaded:', { ResitForm: !!ResitForm, Course: !!Course, Batch: !!Batch, Module: !!Module, User: !!User, MedicalSubmission: !!MedicalSubmission, Department: !!Department });

@@ -1,19 +1,18 @@
 const mongoose = require('mongoose');
 
 const ResitFormSchema = new mongoose.Schema({
-  student: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
-  batch: { type: mongoose.Schema.Types.ObjectId, ref: 'Batch', required: true },
-  module: { type: mongoose.Schema.Types.ObjectId, ref: 'Module', required: true },
-  examType: { type: String, enum: ['Coursework', 'Exam'], required: true },
-  pastExamDates: [{ type: Date, required: true }], // Array of past exam dates (max 3)
-  phoneNumber: { type: String, required: true },
+  student: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+  batch: { type: mongoose.Schema.Types.ObjectId, ref: 'Batch' },
+  module: { type: mongoose.Schema.Types.ObjectId, ref: 'Module' },
+  examType: { type: String },
+  pastExamDates: [{ type: Date }], // Array of past exam dates (max 3)
+  phoneNumber: { type: String },
   isMedical: { type: Boolean, default: false },
   medicalSubmission: { type: mongoose.Schema.Types.ObjectId, ref: 'MedicalSubmission' }, // Only required if isMedical is true
   medicalSubmissionRef: { type: String }, // Human-readable reference ID (e.g., "MED792046588")
   status: { 
     type: String, 
-    enum: ['pending', 'approved', 'rejected'], 
     default: 'pending' 
   },
   courseDirector: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -29,21 +28,7 @@ ResitFormSchema.pre('save', function(next) {
   next();
 });
 
-// Validation for past exam dates (max 3)
-ResitFormSchema.pre('save', function(next) {
-  if (this.pastExamDates && this.pastExamDates.length > 3) {
-    return next(new Error('Maximum 3 past exam dates allowed'));
-  }
-  next();
-});
-
-// Validation for medical submission
-ResitFormSchema.pre('save', function(next) {
-  if (this.isMedical && !this.medicalSubmission) {
-    return next(new Error('Medical submission is required when marking as medical'));
-  }
-  next();
-});
+// Validation hooks removed
 
 // Set medical submission reference ID when medical submission is set
 ResitFormSchema.pre('save', async function(next) {

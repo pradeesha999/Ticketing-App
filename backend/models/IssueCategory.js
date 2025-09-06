@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const IssueCategorySchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  slug: { type: String, required: true, unique: true },
+  name: { type: String, unique: true },
+  slug: { type: String, unique: true },
   description: { type: String },
-  department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
+  department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
   isActive: { type: Boolean, default: true },
   ordering: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },

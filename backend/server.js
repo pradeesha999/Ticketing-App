@@ -6,12 +6,10 @@ require('dotenv').config();
 
 // Import middleware
 const { requestLogger, errorLogger, authLogger } = require('./middleware/loggingMiddleware');
+// Validation middleware removed - keeping only rate limiting
 const { 
-  securityMiddleware, 
   generalLimiter, 
-  authLimiter, 
-  sanitizeInput,
-  validateRequestSize 
+  authLimiter
 } = require('./middleware/validationMiddleware');
 const { 
   errorHandler, 
@@ -44,8 +42,7 @@ const logsRoutes = require('./routes/logs');
 
 const app = express();
 
-// Apply security middleware first
-app.use(securityMiddleware);
+// Security middleware removed
 
 // Apply rate limiting
 app.use('/api/auth', authLimiter);
@@ -75,8 +72,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Serve uploaded files statically (for development)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Apply request size validation
-app.use(validateRequestSize);
+// Request size validation removed
 
 // Request timeout - increased for file uploads and complex operations
 app.use(timeout(120000)); // 2 minutes

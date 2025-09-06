@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, enum: ['superadmin', 'student', 'party'], required: true },
+  name: { type: String },
+  email: { type: String, unique: true },
+  password: { type: String },
+  role: { type: String },
   department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
   isAdmin: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true },

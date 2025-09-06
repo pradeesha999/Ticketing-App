@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
 
 const MedicalSubmissionSchema = new mongoose.Schema({
-  student: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  medicalCondition: { type: String, required: true }, // e.g., "Dengue", "Fever", "Accident"
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
+  student: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  medicalCondition: { type: String }, // e.g., "Dengue", "Fever", "Accident"
+  startDate: { type: Date },
+  endDate: { type: Date },
   documents: [{ 
-    filename: { type: String, required: true },
-    originalName: { type: String, required: true },
-    path: { type: String, required: true },
+    filename: { type: String },
+    originalName: { type: String },
+    path: { type: String },
     uploadedAt: { type: Date, default: Date.now }
   }],
-  referenceId: { type: String, required: true, unique: true, index: true }, // Auto-generated
+  referenceId: { type: String, unique: true, index: true }, // Auto-generated
   status: { 
     type: String, 
-    enum: ['pending', 'approved', 'rejected'], 
     default: 'pending' 
   },
   reviewNotes: { type: String }, // Message from exam department

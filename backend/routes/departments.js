@@ -3,7 +3,7 @@ const Department = require('../models/Department');
 const User = require('../models/User');
 const auth = require('../middleware/authMiddleware');
 const { asyncHandler } = require('../middleware/errorMiddleware');
-const { sanitizeInput } = require('../middleware/validationMiddleware');
+// Validation middleware removed
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.get('/', auth(), asyncHandler(async (req, res) => {
 }));
 
 // Create department (Super Admin)
-router.post('/', auth('superadmin'), sanitizeInput, asyncHandler(async (req, res) => {
+router.post('/', auth('superadmin'), asyncHandler(async (req, res) => {
   const { name, description, assignedParty } = req.body;
 
   // Validate required fields
@@ -41,7 +41,7 @@ router.post('/', auth('superadmin'), sanitizeInput, asyncHandler(async (req, res
 }));
 
 // Update department (Super Admin)
-router.put('/:id', auth('superadmin'), sanitizeInput, asyncHandler(async (req, res) => {
+router.put('/:id', auth('superadmin'), asyncHandler(async (req, res) => {
   const { name, description, assignedParty } = req.body;
 
   // Validate required fields

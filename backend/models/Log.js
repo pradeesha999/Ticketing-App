@@ -8,23 +8,18 @@ const LogSchema = new mongoose.Schema({
   },
   level: { 
     type: String, 
-    enum: ['info', 'warn', 'error', 'debug'], 
     default: 'info',
     index: true 
   },
   category: { 
     type: String, 
-    enum: ['auth', 'ticket', 'medical', 'resit', 'system', 'security', 'performance'], 
-    required: true,
     index: true 
   },
   action: { 
-    type: String, 
-    required: true 
+    type: String
   },
   description: { 
-    type: String, 
-    required: true 
+    type: String
   },
   userId: { 
     type: mongoose.Schema.Types.ObjectId, 
@@ -32,8 +27,7 @@ const LogSchema = new mongoose.Schema({
     index: true 
   },
   userRole: { 
-    type: String, 
-    enum: ['student', 'party', 'admin', 'superadmin'] 
+    type: String
   },
   userEmail: { 
     type: String 

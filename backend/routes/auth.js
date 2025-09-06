@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const auth = require('../middleware/authMiddleware');
-const { userValidation, sanitizeInput } = require('../middleware/validationMiddleware');
+// Validation middleware removed
 const { asyncHandler } = require('../middleware/errorMiddleware');
 require('dotenv').config();
 
@@ -11,8 +11,6 @@ const router = express.Router();
 
 // Register
 router.post('/register', 
-  sanitizeInput,
-  userValidation.create,
   asyncHandler(async (req, res) => {
     const { name, email, password, role } = req.body;
 
@@ -32,7 +30,6 @@ router.post('/register',
 
 // Login
 router.post('/login', 
-  sanitizeInput,
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 

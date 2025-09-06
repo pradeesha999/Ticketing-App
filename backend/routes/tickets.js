@@ -6,12 +6,7 @@ const IssueCategory = require('../models/IssueCategory');
 const Counter = require('../models/Counter');
 const auth = require('../middleware/authMiddleware');
 const Logger = require('../services/logger');
-const { 
-  ticketValidation, 
-  validateId, 
-  sanitizeInput,
-  validatePagination 
-} = require('../middleware/validationMiddleware');
+// Validation middleware removed
 const { asyncHandler } = require('../middleware/errorMiddleware');
 
 const router = express.Router();
@@ -87,7 +82,7 @@ router.get('/my-tickets', auth(), asyncHandler(async (req, res) => {
 }));
 
 // Create new ticket (Student)
-router.post('/', auth('student'), sanitizeInput, asyncHandler(async (req, res) => {
+router.post('/', auth('student'), asyncHandler(async (req, res) => {
   try {
     const { title, description, categoryId, department: overrideDepartmentId, assignedTo: overrideAssignedTo } = req.body;
     
@@ -258,7 +253,7 @@ router.post('/', auth('student'), sanitizeInput, asyncHandler(async (req, res) =
 }));
 
 // Update ticket status (Party)
-router.patch('/:id/status', auth('party'), sanitizeInput, asyncHandler(async (req, res) => {
+router.patch('/:id/status', auth('party'), asyncHandler(async (req, res) => {
   const { status, resolution } = req.body;
 
   // Validate status
@@ -303,7 +298,7 @@ router.patch('/:id/status', auth('party'), sanitizeInput, asyncHandler(async (re
 }));
 
 // Add message to ticket
-router.post('/:id/messages', auth(), sanitizeInput, asyncHandler(async (req, res) => {
+router.post('/:id/messages', auth(), asyncHandler(async (req, res) => {
   const { message } = req.body;
 
   // Validate message
@@ -343,7 +338,7 @@ router.post('/:id/messages', auth(), sanitizeInput, asyncHandler(async (req, res
 }));
 
 // Assign ticket to party (Super Admin)
-router.patch('/:id/assign', auth('superadmin'), sanitizeInput, asyncHandler(async (req, res) => {
+router.patch('/:id/assign', auth('superadmin'), asyncHandler(async (req, res) => {
   const { assignedTo } = req.body;
 
   if (!assignedTo) {
@@ -371,7 +366,7 @@ router.patch('/:id/assign', auth('superadmin'), sanitizeInput, asyncHandler(asyn
 }));
 
 // Reassign ticket to different party (Party who currently owns the ticket)
-router.patch('/:id/reassign', auth('party'), sanitizeInput, asyncHandler(async (req, res) => {
+router.patch('/:id/reassign', auth('party'), asyncHandler(async (req, res) => {
   const { assignedTo } = req.body;
 
   if (!assignedTo) {
@@ -411,7 +406,7 @@ router.patch('/:id/reassign', auth('party'), sanitizeInput, asyncHandler(async (
 }));
 
 // Update ticket priority (Super Admin)
-router.patch('/:id/priority', auth('superadmin'), sanitizeInput, asyncHandler(async (req, res) => {
+router.patch('/:id/priority', auth('superadmin'), asyncHandler(async (req, res) => {
   const { priority } = req.body;
 
   if (!priority) {
@@ -440,8 +435,6 @@ router.patch('/:id/priority', auth('superadmin'), sanitizeInput, asyncHandler(as
 // Request admin approval (Party on assigned ticket)
 router.post('/:id/approval/request', 
   auth('party'), 
-  validateId,
-  sanitizeInput,
   asyncHandler(async (req, res) => {
     const { adminId, notes } = req.body;
     
@@ -490,7 +483,7 @@ router.post('/:id/approval/request',
 );
 
 // Admin: approve
-router.post('/:id/approval/approve', auth(), sanitizeInput, asyncHandler(async (req, res) => {
+router.post('/:id/approval/approve', auth(), asyncHandler(async (req, res) => {
   const { notes } = req.body;
   
   if (req.user.role !== 'party') return res.status(403).json({ error: 'Access denied' });
@@ -525,7 +518,7 @@ router.post('/:id/approval/approve', auth(), sanitizeInput, asyncHandler(async (
 }));
 
 // Admin: reject
-router.post('/:id/approval/reject', auth(), sanitizeInput, asyncHandler(async (req, res) => {
+router.post('/:id/approval/reject', auth(), asyncHandler(async (req, res) => {
   const { notes } = req.body;
   
   if (req.user.role !== 'party') return res.status(403).json({ error: 'Access denied' });

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const DepartmentSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, unique: true },
   description: { type: String },
   assignedParty: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now }

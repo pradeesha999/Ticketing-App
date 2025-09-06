@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const CourseSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  code: { type: String, required: true, unique: true },
+  name: { type: String, unique: true },
+  code: { type: String, unique: true },
   description: { type: String },
-  courseDirector: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  courseDirector: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const BatchSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  code: { type: String, required: true },
-  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
-  startYear: { type: Number, required: true },
-  endYear: { type: Number, required: true },
+  name: { type: String },
+  code: { type: String },
+  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+  startYear: { type: Number },
+  endYear: { type: Number },
   isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }

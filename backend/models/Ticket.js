@@ -1,32 +1,30 @@
 const mongoose = require('mongoose');
 
 const TicketSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
+  title: { type: String },
+  description: { type: String },
   status: { 
     type: String, 
-    enum: ['Issued', 'Seen', 'In Progress', 'Resolved', 'Denounced'], 
     default: 'Issued' 
   },
   priority: { 
     type: String, 
-    enum: ['Low', 'Medium', 'High', 'Critical'], 
     default: 'Medium' 
   },
   ticketNumber: { type: String, unique: true },
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'IssueCategory' },
-  submittedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  submittedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   department: { type: mongoose.Schema.Types.ObjectId, ref: 'Department' },
   resolution: { type: String },
   resolvedAt: { type: Date },
   messages: [{
-    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    message: { type: String, required: true },
+    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    message: { type: String },
     timestamp: { type: Date, default: Date.now }
   }],
   // Approval workflow
-  approvalStatus: { type: String, enum: ['none', 'pending', 'approved', 'rejected'], default: 'none' },
+  approvalStatus: { type: String, default: 'none' },
   approvalAdmin: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   approvalRequestedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   approvalRequestedAt: { type: Date },

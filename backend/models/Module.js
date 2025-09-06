@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const ModuleSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  code: { type: String, required: true },
-  batch: { type: mongoose.Schema.Types.ObjectId, ref: 'Batch', required: true },
-  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course', required: true },
-  credits: { type: Number, required: true },
+  name: { type: String },
+  code: { type: String },
+  batch: { type: mongoose.Schema.Types.ObjectId, ref: 'Batch' },
+  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+  credits: { type: Number },
   isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
