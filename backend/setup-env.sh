@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Setup environment variables for the backend server
+echo "Setting up environment variables for the backend server..."
+
+# Check if .env file exists
+if [ -f ".env" ]; then
+    echo ".env file already exists. Backing up to .env.backup"
+    cp .env .env.backup
+fi
+
+# Create .env file with default values
+cat > .env << EOF
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+
+# MongoDB Configuration
+MONGO_URI=mongodb://localhost:27017/ticketing-system
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+JWT_EXPIRE=24h
+
+# CORS Configuration
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:4173,http://localhost:3000
+
+# File Upload Configuration
+MAX_FILE_SIZE=5242880
+UPLOAD_PATH=./uploads
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+AUTH_RATE_LIMIT_MAX_REQUESTS=5
+
+# Logging
+LOG_LEVEL=info
+LOG_TO_FILE=false
+EOF
+
+echo ".env file created successfully!"
+echo ""
+echo "IMPORTANT: Please update the JWT_SECRET with a secure random string before running in production!"
+echo ""
+echo "You can now start the server with: npm start"
+echo "Or in development mode with: npm run dev"
+
+
+
+
+
+
+
+
+
+
+
